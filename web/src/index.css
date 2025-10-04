@@ -1,0 +1,172 @@
+:root {
+  --bg-start: #0b1020;
+  --bg-end: #0e152b;
+  --fg: #e5e7eb;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--bg-start), var(--bg-end));
+  color: var(--fg);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  display: grid;
+  place-items: center;
+  overflow-x: hidden;
+}
+
+/* Shell */
+.app {
+  width: clamp(720px, 70vw, 1100px);
+  max-width: calc(100vw - 32px);
+  margin: 24px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Cards */
+.card {
+  width: 100%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 6px;
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  margin: 0;
+}
+
+/* Analyze row */
+.row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.input {
+  flex: 1;
+  min-width: 280px;
+  max-width: 600px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--fg);
+  outline: none;
+}
+
+.button {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Status under Analyze button */
+.status {
+  margin-top: 10px;
+  min-height: 22px;
+  text-align: center;
+}
+
+.status .ok {
+  color: #86efac;
+}
+
+.status .err {
+  color: #fca5a5;
+}
+
+/* Chat area */
+.chat {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-box {
+  min-height: 56vh;
+  max-height: 70vh;
+  overflow: auto;
+  padding: 16px;
+  border-radius: 14px;
+  background: #0b1020;
+  border: 1px solid var(--card-border);
+}
+
+/* Ensure long text never widens layout */
+.answer {
+  color: #fff;
+  white-space: pre-wrap;
+  line-height: 1.55;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Code blocks scroll inside, not widen page */
+pre.code {
+  display: block;
+  background: #0f172a;
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 12px;
+  border-radius: 10px;
+  overflow-x: auto;
+  max-width: 100%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Source pills */
+.sources {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #93c5fd;
+  text-decoration: none;
+  font-size: 12px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

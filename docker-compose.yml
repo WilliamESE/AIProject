@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - VITE_API_URL=http://localhost:4000
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+    command: ["sh", "-lc", "npm ci && npm run start"]
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./api/.env
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+    shm_size: "1gb"
+    command: ["sh","-lc","npm ci && npm run dev -- --host 0.0.0.0"]
