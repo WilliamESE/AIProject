@@ -1,4 +1,4 @@
-#DocChat — Scrape Docs → Embed → Chat (Node + React)
+# DocChat — Scrape Docs → Embed → Chat (Node + React)
 
 A full-stack app that crawls documentation sites, chunks & embeds the content into a vector DB (Pinecone), and lets you chat with the docs through a clean React UI.
 
@@ -6,7 +6,7 @@ A full-stack app that crawls documentation sites, chunks & embeds the content in
 - Frontend: React + Vite (single-page app)
 - Infra: Docker Desktop + docker-compose (dev-friendly)
 
-##Features
+## Features
 
 - Analyze any docs URL — one input + “Analyze” button
 - Respectful crawler — same-domain, optional path prefix (e.g. /docs), depth & page caps, small delay
@@ -15,7 +15,7 @@ A full-stack app that crawls documentation sites, chunks & embeds the content in
 - Semantic search — OpenAI embeddings → Pinecone (stores url, title, and a snippet per chunk)
 - Dockerized — one docker compose up -d --build for API + Web
 
-##Project Structure
+## Project Structure
 ```
 /api
   ├─ src/
@@ -46,7 +46,7 @@ A full-stack app that crawls documentation sites, chunks & embeds the content in
 docker-compose.yml
 ```
 
-##Prerequisites
+## Prerequisites
 
 - Docker Desktop
 - Node 20+ (optional, for running locally without Docker)
@@ -54,8 +54,8 @@ docker-compose.yml
     - OpenAI (OPENAI_API_KEY)
     - Pinecone (PINECONE_API_KEY) and a serverless index (see setup below)
 
-##Configuration
-###API (api/.env)
+## Configuration
+### API (api/.env)
 
 Copy .env.example → .env and fill:
 
@@ -74,12 +74,12 @@ PORT=4000
 Ensure your Pinecone index dimension matches the embedding model:
 text-embedding-3-small → 1536 dimensions (this is what the app uses).
 
-###Web (web/.env.local)
+### Web (web/.env.local)
 ```ini
 VITE_API_URL=http://localhost:4000
 ```
 
-###Run (Docker Desktop)
+### Run (Docker Desktop)
 
 From repo root:
 ```bash
@@ -92,9 +92,9 @@ docker compose up -d --build
 The compose uses a bind mount and a named volume for /app/node_modules.
 It runs npm ci on container start so dependencies are always available.
 
-##Run (Local, without Docker)
+## Run (Local, without Docker)
 
-###API
+### API
 ```bash
 cd api
 npm ci
@@ -104,14 +104,14 @@ npm run start
 # API on http://localhost:4000
 ```
 
-###Web
+### Web
 ```bash
 cd web
 npm ci
 npm run dev
 # Web on http://localhost:5173
 ```
-##Using the App
+## Using the App
 
 1. Analyze a site
 In the UI, paste a docs URL (e.g. https://nextjs.org/docs) and click Analyze.
@@ -128,7 +128,7 @@ You’ll get a short answer with source pills; click a pill to open the exact do
 
 Namespaces are auto-derived from the hostname (e.g., nextjs.org → nextjs) so each site is isolated in Pinecone.
 
-##REST API (for integrations)
+## REST API (for integrations)
 
 Base URL: http://localhost:4000
 
@@ -140,7 +140,7 @@ Base URL: http://localhost:4000
 /query	POST	{ question, topK?, namespace? }	Semantic nearest-neighbors with snippets
 /chat	POST	{ question, topK?, namespace? }	RAG answer + citations using top chunks
 
-###Notes
+### Notes
 
 Typical crawl body for a docs site:
 ```json
@@ -157,7 +157,7 @@ Typical crawl body for a docs site:
 
 The scraper uses an HTTP fast path and a Playwright fallback with domcontentloaded (not networkidle) to avoid hanging pages.
 
-##Tech Choices
+## Tech Choices
 
 - Playwright browser fallback avoids SPA/JS rendering issues
 - Cheerio for fast link discovery
@@ -166,7 +166,7 @@ The scraper uses an HTTP fast path and a Playwright fallback with domcontentload
 - React + Vite UI (dark theme, code blocks, responsive, centered)
 - CORS enabled so the browser can call the API
 
-##Development Tips
+## Development Tips
 
 - Windows + Docker Desktop:
 - Watchers can cause resets mid-request; the compose runs the API without --watch.
@@ -175,13 +175,13 @@ The scraper uses an HTTP fast path and a Playwright fallback with domcontentload
 - Index dimension mismatch: If Pinecone rejects upserts, recreate the index with the correct dimension (1536).
 - CORS: Already enabled (cors({ origin: true })) in src/index.js.
 
-##Respect & Safety
+## Respect & Safety
 
 - Keep crawl limits reasonable (maxDepth, maxPages, delayMs).
 - Prefer scoping with pathPrefix (e.g., /docs) to avoid marketing pages.
 - Consider parsing robots.txt/sitemap.xml for stricter compliance (easy to add later).
 
-Quick Test (PowerShell)
+### Quick Test (PowerShell)
 ```powershell
 # check API
 Invoke-RestMethod 'http://localhost:4000/health'
@@ -204,10 +204,10 @@ Invoke-RestMethod -Uri 'http://localhost:4000/query' -Method Post -ContentType '
 Invoke-RestMethod -Uri 'http://localhost:4000/chat'  -Method Post -ContentType 'application/json' -Body $ask
 ```
 
-##License
+## License
 
 MIT — free to use, modify, and ship.
 
-##Credits
+## Credits
 
 Built with Node.js, React, Playwright, OpenAI, and Pinecone.
